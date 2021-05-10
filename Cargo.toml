@@ -5,15 +5,26 @@ authors = ["Eric Seppanen <eds@reric.net>"]
 edition = "2018"
 license = "MIT"
 
+resolver = "2"
+
 [lib]
 name = "demo"
 crate-type = ["staticlib"]
+
+[features]
+# Enable the `alloc` feature to get access to Box, Vec, etc.
+alloc = ["libc_alloc"]
+default = ["alloc"] # Build with --no-default-features to run without alloc.
 
 [profile.dev]
 panic = "abort"
 
 [profile.release]
 panic = "abort"
+
+[dependencies]
+libc_alloc = { version = "1.0", optional = true }
+libc = "0.2"
 
 [build-dependencies]
 cbindgen = "0.19"
